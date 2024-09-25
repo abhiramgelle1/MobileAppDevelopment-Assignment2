@@ -25,6 +25,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   double num1 = 0; // First operand
   double num2 = 0; // Second operand
   String operand = ""; // Stores the selected operator
+  bool decimalUsed =
+      false; // Tracks if a decimal point has been used in the current number
 
   // Button press handler
   void buttonPressed(String buttonText) {
@@ -33,6 +35,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       num1 = 0;
       num2 = 0;
       operand = "";
+      decimalUsed = false; // Reset decimal tracking
     } else if (buttonText == "+" ||
         buttonText == "-" ||
         buttonText == "*" ||
@@ -40,6 +43,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       num1 = double.parse(output);
       operand = buttonText;
       _output = "0";
+      decimalUsed = false; // Allow decimal in the next number
     } else if (buttonText == "=") {
       num2 = double.parse(output);
       if (operand == "/" && num2 == 0) {
@@ -64,6 +68,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       num1 = 0;
       num2 = 0;
       operand = "";
+      decimalUsed = false; // Allow decimal in the next calculation
+    } else if (buttonText == ".") {
+      // Handle decimal point input
+      if (!decimalUsed) {
+        _output += ".";
+        decimalUsed = true; // Mark that a decimal point has been used
+      }
     } else {
       if (_output == "0" || _output == "Error") {
         _output = buttonText; // Start fresh if "Error" is displayed
