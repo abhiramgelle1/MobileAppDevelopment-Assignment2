@@ -42,30 +42,39 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       _output = "0";
     } else if (buttonText == "=") {
       num2 = double.parse(output);
-      switch (operand) {
-        case "+":
-          _output = (num1 + num2).toString();
-          break;
-        case "-":
-          _output = (num1 - num2).toString();
-          break;
-        case "*":
-          _output = (num1 * num2).toString();
-          break;
-        case "/":
-          _output = (num1 / num2).toString();
-          break;
+      if (operand == "/" && num2 == 0) {
+        // Division by zero check
+        _output = "Error";
+      } else {
+        switch (operand) {
+          case "+":
+            _output = (num1 + num2).toString();
+            break;
+          case "-":
+            _output = (num1 - num2).toString();
+            break;
+          case "*":
+            _output = (num1 * num2).toString();
+            break;
+          case "/":
+            _output = (num1 / num2).toString();
+            break;
+        }
       }
       num1 = 0;
       num2 = 0;
       operand = "";
     } else {
-      _output += buttonText;
+      if (_output == "0" || _output == "Error") {
+        _output = buttonText; // Start fresh if "Error" is displayed
+      } else {
+        _output += buttonText;
+      }
     }
 
     setState(() {
-      output = double.parse(_output)
-          .toStringAsFixed(2); // Ensures display shows only two decimal places
+      output =
+          _output; // Directly update the output without formatting to fixed decimals
     });
   }
 
