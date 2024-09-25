@@ -35,7 +35,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       num1 = 0;
       num2 = 0;
       operand = "";
-      decimalUsed = false; // Reset decimal tracking
+      decimalUsed = false; // Reset decimal tracking when "CLEAR" is pressed
     } else if (buttonText == "+" ||
         buttonText == "-" ||
         buttonText == "*" ||
@@ -43,7 +43,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       num1 = double.parse(output);
       operand = buttonText;
       _output = "0";
-      decimalUsed = false; // Allow decimal in the next number
+      decimalUsed = false; // Reset decimal tracking for the next number
     } else if (buttonText == "=") {
       num2 = double.parse(output);
       if (operand == "/" && num2 == 0) {
@@ -68,7 +68,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       num1 = 0;
       num2 = 0;
       operand = "";
-      decimalUsed = false; // Allow decimal in the next calculation
+      decimalUsed = false; // Reset decimal tracking for the next calculation
     } else if (buttonText == ".") {
       // Handle decimal point input
       if (!decimalUsed) {
@@ -84,8 +84,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     }
 
     setState(() {
-      output =
-          _output; // Directly update the output without formatting to fixed decimals
+      output = _output; // Directly update the output
     });
   }
 
